@@ -1,0 +1,18 @@
+@host=http://localhost:7071
+@tenantId=
+@clientId=
+@clientSecret=
+@accessToken=
+
+### Get the access token
+POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{clientId}}
+&scope={{clientId}}/.default
+&client_secret={{clientSecret}}
+&grant_type=client_credentials
+
+### Request the sample API
+GET {{host}}/api/sample
+Authorization: Bearer {{accessToken}}
