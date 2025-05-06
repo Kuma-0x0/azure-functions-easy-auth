@@ -1,3 +1,4 @@
+using FunctionsEasyAuth;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Hosting;
 
@@ -9,5 +10,11 @@ builder.ConfigureFunctionsWebApplication();
 // builder.Services
 //     .AddApplicationInsightsTelemetryWorkerService()
 //     .ConfigureFunctionsApplicationInsights();
+
+builder.UseWhen<SampleHttpMiddleware>(context =>
+{
+    return context.FunctionDefinition.InputBindings.Values
+        .First(data => data.Type.EndsWith("Trigger")).Type == "httpTrigger";
+});
 
 builder.Build().Run();
